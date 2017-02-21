@@ -131,8 +131,13 @@ public class ServletHandler extends
 			String result = "欢迎访问Netty-HttpServer服务器";
 			servletResponse.getWriter().write(result);
 		}
-
-		this.servlet.service(servletRequest, servletResponse);
+		
+		try {
+			this.servlet.service(servletRequest, servletResponse);
+		} catch (Exception e) {
+			logger.error("初始化servlet错误", e);
+		}
+		
 		HttpResponseStatus status = HttpResponseStatus.valueOf(servletResponse
 				.getStatus());
 		HttpResponse response = new DefaultHttpResponse(HTTP_1_1, status);
