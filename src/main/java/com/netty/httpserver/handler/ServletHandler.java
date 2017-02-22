@@ -120,7 +120,7 @@ public class ServletHandler extends
 
 		// 中文乱码处理
 		servletResponse.setCharacterEncoding("UTF-8");
-		servletResponse.addHeader(CONTENT_TYPE, "text/json;charset=UTF-8");
+		servletResponse.addHeader(CONTENT_TYPE, "text/plain;charset=UTF-8");
 
 		// 去除浏览器"/favicon.ico"的干扰
 		if (uri.equals("/favicon.ico")) {
@@ -135,6 +135,8 @@ public class ServletHandler extends
 		try {
 			this.servlet.service(servletRequest, servletResponse);
 		} catch (Exception e) {
+			String result = "HttpServer Error";
+			servletResponse.getWriter().write(result);
 			logger.error("初始化servlet错误", e);
 		}
 		
@@ -162,7 +164,7 @@ public class ServletHandler extends
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
 			throws Exception {
-		cause.printStackTrace();
+		logger.error("捕获异常：", cause);
 		if (ctx.channel().isActive()) {
 			sendError(ctx, INTERNAL_SERVER_ERROR);
 		}
