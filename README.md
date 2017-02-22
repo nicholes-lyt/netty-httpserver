@@ -15,3 +15,6 @@
 	log4j配置文件：log4j.properties
 	logback配置文件：logback.xml
 	netty服务参数配置：nettyserver.properties
+	
+4、实现的功能
+	只支持GET、POST访问请求
